@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch api</title>
+</head>
+<body>
+    <h1>Product detials with Fetch API</h1>
+    <div id="product-details">
+        <!-- Product information will be inserted here -->
+    </div>
+
+    <script>
+
+        const apiUrl = "https://dummyjson.com/products"
+        // Fetch JSON data
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Access the JSON data
+                const product = data;
+
+                // Create HTML elements to display product details
+                const productDetails = `
+                    <h1>${product.title}</h1>
+                    <p>Description: ${product.description}</p>
+                    <p>Price: $${product.price}</p>
+                    <p>Discount: ${product.discountPercentage}%</p>
+                    <p>Rating: ${product.rating}</p>
+                    <p>Stock: ${product.stock}</p>
+                    <p>Brand: ${product.brand}</p>
+                    <p>Category: ${product.category}</p>
+                    <img src="${product.thumbnail}" alt="${product.title} Thumbnail">
+                    <div>
+                        <h2>Product Images</h2>
+                        <div>
+                            ${product.images.map(image => `<img src="${image}" alt="${product.title} Image">`).join('')}
+                        </div>
+                    </div>
+                `;
+
+                // Insert product details into the HTML
+                document.getElementById('product-details').innerHTML = productDetails;
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
